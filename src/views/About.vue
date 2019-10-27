@@ -1,5 +1,162 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div class="bg">
+      <p>{{ nickName }}</p>
+      <img :src="avatarImageUrl" />
+      <div class="wave">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
+    </div>
+    <div class="menu">
+      <nut-cell title="个人信息" :showIcon="true"></nut-cell>
+      <div class="cell">
+        <span>夜间模式</span>
+        <nut-switch :active="true" size="small"></nut-switch>
+      </div>
+
+      <nut-cell
+        title="推荐朋友"
+        :showIcon="true"
+        :isLink="true"
+        linkUrl="http://service.weibo.com/share/share.php?appkey=&title=&url=&searchPic=false&style=simple"
+      ></nut-cell>
+      <nut-cell title="关于我们" :showIcon="true"></nut-cell>
+    </div>
   </div>
 </template>
+
+<script>
+import Vue from "vue";
+import { Switch, Cell } from "@nutui/nutui";
+
+Switch.install(Vue);
+Cell.install(Vue);
+
+export default {
+  name: "about",
+  components: {
+    [Switch.name]: Switch,
+    [Cell.name]: Cell
+  },
+  data() {
+    return {
+      swActive: true,
+      avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
+      nickName: "KKKKnq"
+    };
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.about {
+  overflow: hidden;
+}
+// .about {
+//   &::after {
+//     content: "";
+//     display: block;
+//     height: 0;
+//     clear: both;
+//     visibility: hidden;
+//   }
+// }
+.bg {
+  width: 100%;
+  height: 170px;
+  background: #ff7b8c;
+  position: absolute;
+  top: 0;
+  color: #fff;
+  left: 0;
+  z-index: 1;
+  & > p {
+    font-size: 1.5em;
+    position: absolute;
+    top: 50px;
+    left: 70px;
+  }
+  & > img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    right: 50px;
+    bottom: 17px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+  }
+  &::after {
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 80px;
+    z-index: 1;
+    position: absolute;
+    -webkit-clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    background: #fff;
+    z-index: -1;
+  }
+}
+
+.wave {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  right: 35px;
+  bottom: 5px;
+}
+
+.wave .circle {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+}
+.wave .circle:first-child {
+  animation: circle-opacity 4s infinite;
+}
+
+.wave .circle:nth-child(2) {
+  animation: circle-opacity 4s infinite;
+  animation-delay: 1s;
+}
+
+.wave .circle:nth-child(3) {
+  animation: circle-opacity 4s infinite;
+  animation-delay: 1.7s;
+}
+
+@keyframes circle-opacity {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+.menu {
+  margin-top: 200px;
+  padding: 0 10px;
+}
+
+.cell {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  margin-left: 10px;
+  padding: 13px 10px 13px 0;
+  font-size: 14px;
+}
+</style>
