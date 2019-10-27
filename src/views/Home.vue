@@ -7,17 +7,24 @@
     <div class="content">
       <post></post>
     </div>
+    <tab></tab>
   </div>
 </template>
 
 <script>
+import tab from "@/components/TabBar";
 import post from "@/components/Post";
 // import tab from "@/components/TabBar";
 
 export default {
   name: "home",
   components: {
-    post
+    post,
+    tab
+  },
+  methods: {
+  },
+  created() {
   }
 };
 </script>
@@ -29,8 +36,8 @@ export default {
 
 .topbar {
   position: fixed;
-  width: 100%;
   top: 0;
+  width: 100%;
   padding: 0 10px;
   background-color: #ffffff;
   z-index: 2;

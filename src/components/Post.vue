@@ -1,6 +1,15 @@
 <template>
   <div>
-    <article v-for="(post, index) in posts" :key="index">
+    <nut-skeleton class="my-skeleton" v-if="isShow">
+      <row padding="0 10px 20px">
+        <column>
+          <skeleton-square width="auto" :count="6" margin="5px 10px 5px 10px"></skeleton-square>
+          <skeleton-square width="200px" margin="5px 10px 5px 10px"></skeleton-square>
+        </column>
+      </row>
+    </nut-skeleton>
+
+    <article v-else v-for="(post, index) in posts" :key="index">
       <div class="postinfo">
         <img class="avatar" :src="post.avatarImageUrl" />
         <div class="nickname">{{ post.nickName }}</div>
@@ -9,7 +18,6 @@
       <div class="postcontent">
         <img :src="post.postImageUrl" />
         <p>{{ post.content }}</p>
-        <svg-icon icon-class="heart"></svg-icon>
         <span style="font-size: 0.7em;">查看全部３条评论</span>
         <!-- <div class="heart"></div> -->
       </div>
@@ -18,37 +26,39 @@
 </template>
 
 <script>
+import Vue from "vue";
+import Skeleton from "@nutui/nutui";
+
+Skeleton.install(Vue);
+
 export default {
   name: "post",
+  components: {
+    [Skeleton.name]: Skeleton
+  },
   data() {
     return {
-      posts: [
-        {
-          avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "kkkknq",
-          timeStamp: "1天前",
-          content:
-            "分享一个周末，手机摄影无滤镜。扬州的秋天是真的美，第n次来瘦西湖，这个季节满是桂花香，与烟花三月的热闹不同，此时淡淡的清冷感别有一番意境。对了，来了扬州一定要去趣园茶社，菜品棒极了。",
-          postImageUrl: "https://i.loli.net/2019/10/26/rGpXhgoIQDkAUn4.jpg"
-        },
-        {
-          avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "kkkknq",
-          timeStamp: "29天前",
-          content:
-            "分享一个周末，手机摄影无滤镜。扬州的秋天是真的美，第n次来瘦西湖，这个季节满是桂花香，与烟花三月的热闹不同，此时淡淡的清冷感别有一番意境。对了，来了扬州一定要去趣园茶社，菜品棒极了。",
-          postImageUrl: "https://i.loli.net/2019/10/26/rGpXhgoIQDkAUn4.jpg"
-        },
-        {
-          avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "kkkknq",
-          timeStamp: "1年前",
-          content:
-            "分享一个周末，手机摄影无滤镜。扬州的秋天是真的美，第n次来瘦西湖，这个季节满是桂花香，与烟花三月的热闹不同，此时淡淡的清冷感别有一番意境。对了，来了扬州一定要去趣园茶社，菜品棒极了。",
-          postImageUrl: "https://i.loli.net/2019/10/26/rGpXhgoIQDkAUn4.jpg"
-        }
-      ]
+      posts: null,
+      isShow: true
     };
+  },
+  methods: {
+    getPosts() {
+      const ctx = this;
+      this.$api
+        .getPosts({})
+        .then(res => {
+          ctx.posts = res.data.data;
+          this.isShow = false;
+        })
+        .catch(e => {
+          ctx.isShow = true;
+          throw new Error(e);
+        });
+    }
+  },
+  created() {
+    this.getPosts();
   }
 };
 </script>
@@ -70,6 +80,7 @@ article {
   }
   & > img {
     height: 50px;
+    width: 50px;
     float: left;
     border-radius: 50%;
   }

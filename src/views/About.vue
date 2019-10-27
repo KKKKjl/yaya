@@ -16,20 +16,17 @@
         <nut-switch :active="true" size="small"></nut-switch>
       </div>
 
-      <nut-cell
-        title="推荐朋友"
-        :showIcon="true"
-        :isLink="true"
-        linkUrl="http://service.weibo.com/share/share.php?appkey=&title=&url=&searchPic=false&style=simple"
-      ></nut-cell>
+      <nut-cell title="推荐朋友" :showIcon="true"></nut-cell>
       <nut-cell title="关于我们" :showIcon="true"></nut-cell>
     </div>
+    <tab></tab>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import { Switch, Cell } from "@nutui/nutui";
+import tab from "@/components/TabBar";
 
 Switch.install(Vue);
 Cell.install(Vue);
@@ -38,7 +35,8 @@ export default {
   name: "about",
   components: {
     [Switch.name]: Switch,
-    [Cell.name]: Cell
+    [Cell.name]: Cell,
+    tab
   },
   data() {
     return {
@@ -51,24 +49,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.about {
-  overflow: hidden;
-}
-// .about {
-//   &::after {
-//     content: "";
-//     display: block;
-//     height: 0;
-//     clear: both;
-//     visibility: hidden;
-//   }
-// }
 .bg {
   width: 100%;
   height: 170px;
   background: #ff7b8c;
   position: absolute;
   top: 0;
+  overflow: hidden;
   color: #fff;
   left: 0;
   z-index: 1;
@@ -81,6 +68,7 @@ export default {
   & > img {
     width: 90px;
     height: 90px;
+    background: #fff;
     border-radius: 50%;
     position: absolute;
     right: 50px;
