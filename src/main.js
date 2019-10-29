@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import api from './api/api';
 import "./registerServiceWorker";
-// import "./icon/iconfont.js";
+import "./icon/iconfont.js";
 
 Vue.config.productionTip = false;
 Vue.prototype.$api = api;

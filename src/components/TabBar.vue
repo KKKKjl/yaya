@@ -44,17 +44,17 @@ export default {
   },
   methods: {
     tabSwitch: function(value, index) {
-      console.log(index)
+      console.log(index);
       switch (index) {
         case 0:
           this.$router.push("/");
           break;
         case 1:
-          this.$router.push("/login");
+          this.$router.push("/edit");
           break;
         case 2:
           this.$router.push("/about");
-          break
+          break;
         default:
           this.$$router.push("/");
           break;

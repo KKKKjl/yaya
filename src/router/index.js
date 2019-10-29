@@ -13,6 +13,12 @@ const router = new VueRouter({
       component: Home
     },
     {
+      path: "/edit",
+      name: "edit",
+      component: () =>
+        import("../views/Editor.vue")
+    },
+    {
       path: "/about",
       name: "about",
       // meta: {

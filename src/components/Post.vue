@@ -1,7 +1,7 @@
 <template>
   <div>
     <nut-skeleton class="my-skeleton" v-if="isShow">
-      <row padding="0 10px 20px">
+      <row padding="0 10px 20px" v-for=" i in 5" :key="i">
         <column>
           <skeleton-square width="auto" :count="6" margin="5px 10px 5px 10px"></skeleton-square>
           <skeleton-square width="200px" margin="5px 10px 5px 10px"></skeleton-square>
@@ -18,28 +18,31 @@
       <div class="postcontent">
         <img :src="post.postImageUrl" />
         <p>{{ post.content }}</p>
-        <span style="font-size: 0.7em;">查看全部３条评论</span>
-        <!-- <div class="heart"></div> -->
+        <span style="font-size: 0.7em;" @click="showComments">查看全部３条评论</span>
       </div>
     </article>
+    <comment :isVisible="isVisible" v-on:cancel="showComments"></comment>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import Skeleton from "@nutui/nutui";
+import comment from "@/components/Comment.vue";
 
 Skeleton.install(Vue);
 
 export default {
   name: "post",
   components: {
-    [Skeleton.name]: Skeleton
+    [Skeleton.name]: Skeleton,
+    comment
   },
   data() {
     return {
       posts: null,
-      isShow: true
+      isShow: true,
+      isVisible: false
     };
   },
   methods: {
@@ -55,6 +58,10 @@ export default {
           ctx.isShow = true;
           throw new Error(e);
         });
+    },
+    showComments() {
+      const ctx = this;
+      ctx.isVisible = !ctx.isVisible;
     }
   },
   created() {
@@ -110,28 +117,4 @@ article {
     font-size: 0.9em;
   }
 }
-
-// .heart {
-//   width: 100px;
-//   height: 100px;
-//   transform: translate(-50%, -50%);
-//   background: url(https://cssanimation.rocks/images/posts/steps/heart.png)
-//     no-repeat;
-//   background-position: 0 0;
-//   cursor: pointer;
-//   animation: fave-heart 1s steps(28);
-//   &:hover {
-//     background-position: -2800px 0;
-//     transition: background 1s steps(28);
-//   }
-// }
-
-// @keyframes fave-heart {
-//   0% {
-//     background-position: 0 0;
-//   }
-//   100% {
-//     background-position: -2800px 0;
-//   }
-// }
 </style>

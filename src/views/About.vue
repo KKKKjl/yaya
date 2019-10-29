@@ -54,8 +54,8 @@ export default {
   height: 170px;
   background: #ff7b8c;
   position: absolute;
-  top: 0;
   overflow: hidden;
+  top: 0;
   color: #fff;
   left: 0;
   z-index: 1;
@@ -110,17 +110,17 @@ export default {
   border: 2px solid #ffffff;
 }
 .wave .circle:first-child {
-  animation: circle-opacity 4s infinite;
+  animation: circle-opacity 5s infinite;
 }
 
 .wave .circle:nth-child(2) {
-  animation: circle-opacity 4s infinite;
-  animation-delay: 1s;
+  animation: circle-opacity 5s infinite;
+  animation-delay: 2s;
 }
 
 .wave .circle:nth-child(3) {
-  animation: circle-opacity 4s infinite;
-  animation-delay: 1.7s;
+  animation: circle-opacity 5s infinite;
+  animation-delay: 2.6s;
 }
 
 @keyframes circle-opacity {
