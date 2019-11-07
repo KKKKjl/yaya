@@ -6,7 +6,8 @@
       :leftShow="true"
       :rightShow="false"
     >登录</nut-navbar>
-    <div class="form">
+
+    <form>
       <nut-textinput
         v-model="username"
         placeholder="请输入用户名或邮箱"
@@ -22,11 +23,13 @@
         v-model="password"
         type="password"
       />
-      <nut-button @click="login" block type="gray" color="#2c3e50">登录</nut-button>
-      <div class="prompt-box">
-        <a @click="forgetPassword">忘记密码？</a>
-        <a href>注册</a>
-      </div>
+      <nut-button @click="login" block style="background:#ff7b8c">登录</nut-button>
+      <slot name="prompt"></slot>
+    </form>
+
+    <div class="prompt-box">
+      <a @click="forgetPassword">忘记密码？</a>
+      <a @click="register">注册</a>
     </div>
     <nut-actionsheet :is-visible="isVisible" @close="closeActionSheet">
       <div slot="custom" class="custom-wrap">
@@ -39,8 +42,8 @@
           :disabled="false"
         />
         <nut-buttongroup shape="circle">
-          <nut-button type="light" @click="clearEmail">重置</nut-button>
-          <nut-button>确定</nut-button>
+          <nut-button color="#333" style="background:#eee" @click="clearEmail">重置</nut-button>
+          <nut-button style="background:#ff7b8c">确定</nut-button>
         </nut-buttongroup>
       </div>
     </nut-actionsheet>
@@ -49,44 +52,29 @@
 
 <script>
 import Vue from "vue";
-import {
-  Navbar,
-  TextInput,
-  Button,
-  Toast,
-  ActionSheet,
-  ButtonGroup
-} from "@nutui/nutui";
-
+import { Navbar, ActionSheet, TextInput, Button } from "@nutui/nutui";
 Navbar.install(Vue);
-Button.install(Vue);
-TextInput.install(Vue);
-Toast.install(Vue);
 ActionSheet.install(Vue);
-ButtonGroup.install(Vue);
+TextInput.install(Vue);
+Button.install(Vue);
 
 export default {
   name: "login",
   components: {
     [Navbar.name]: Navbar,
-    [TextInput.name]: TextInput,
-    [Button.name]: Button,
-    [Toast.name]: Toast,
     [ActionSheet.name]: ActionSheet,
-    [ButtonGroup.name]: ButtonGroup
+    [TextInput.name]: TextInput,
+    [Button.name]: Button
   },
   data() {
     return {
-      username: "",
-      password: "",
       isVisible: false,
-      email: ""
+      email: "",
+      username: "",
+      password: ""
     };
   },
   methods: {
-    back() {
-      alert("header头部， 点击返回");
-    },
     onBlur() {
       if (this.username == "") {
         this.$toast.text("用户名不能为空！");
@@ -97,11 +85,34 @@ export default {
         this.$toast.text("密码不能为空！");
       }
     },
+    login() {
+      this.$api
+        .login({
+          nickname: this.username,
+          password: this.password
+        })
+        .then(res => {
+          let token = res.headers.authorization;
+          if (token) {
+            this.$store.commit("setToken", token);
+            // this.$store.commit("setUser", this.username);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    register() {
+      this.$router.push("/register");
+    },
     forgetPassword() {
       this.isVisible = !this.isVisible;
     },
     closeActionSheet() {
       this.isVisible = !this.isVisible;
+    },
+    back() {
+      this.$router.go(-1);
     },
     clearEmail() {
       this.email = "";
@@ -113,21 +124,17 @@ export default {
       } else if (!regEmail.test(this.email)) {
         this.$toast.text("邮箱格式错误！");
       }
-    },
-    login() {}
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .login {
-  overflow: hidden;
-  padding: 10px;
+  padding: 0 10px 0 10px;
 }
-.form {
-  margin-top: 20px;
-}
-.nut-textinput {
+
+.nut-navbar {
   margin-bottom: 10px;
 }
 .prompt-box {
@@ -143,5 +150,9 @@ export default {
 
 .custom-wrap {
   padding: 0 10px 30px 10px;
+}
+
+.nut-textinput {
+  margin-bottom: 10px;
 }
 </style>

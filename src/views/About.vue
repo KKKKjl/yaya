@@ -42,8 +42,27 @@ export default {
     return {
       swActive: true,
       avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-      nickName: "KKKKnq"
+      nickName: ""
     };
+  },
+  mounted() {
+    this.getUserInfo();
+  },
+  methods: {
+    getUserInfo() {
+      this.$api
+        .getUserInfo({
+          params: {
+            nickname: "jinglei"
+          }
+        })
+        .then(res => {
+          this.nickName = res.data.data.nickname
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>

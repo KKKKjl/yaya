@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "../store/index.js";
+import store from "../store/index.js";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
@@ -21,9 +21,9 @@ const router = new VueRouter({
     {
       path: "/about",
       name: "about",
-      // meta: {
-      //   requireAuth: true
-      // },
+      meta: {
+        requireAuth: true
+      },
       component: () =>
         import("../views/About.vue")
 
@@ -33,28 +33,35 @@ const router = new VueRouter({
       name: "login",
       component: () =>
         import("../views/Login.vue")
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () =>
+        import("../views/Register.vue")
     }
   ]
 })
 
-// const token = window.localStorage.getItem("token");
-// if (token) {
-//   store.commit("setUserStatus");
-// }
+const token = window.localStorage.getItem("token");
+if (token) {
+  store.commit("setUserStatus");
+  store.commit("setUser", "jinglei");
+}
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requireAuth)) {
-//     if (!store.state.isLogin) {
-//       next({
-//         name: "login",
-//         query: { redirect: to.fullPath }
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    if (!token) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

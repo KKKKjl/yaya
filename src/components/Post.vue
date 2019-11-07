@@ -11,12 +11,14 @@
 
     <article v-else v-for="(post, index) in posts" :key="index">
       <div class="postinfo">
-        <img class="avatar" :src="post.avatarImageUrl" />
-        <div class="nickname">{{ post.nickName }}</div>
-        <div class="timestamp">{{ post.timeStamp }}</div>
+        <img class="avatar" src="https://i.loli.net/2019/11/07/5tzAhG3RiPrevlU.jpg" />
+        <!-- <img class="avatar" :src="post.avatarImageUrl" /> -->
+        <div class="nickname">{{ post.user.nickname }}</div>
+        <div class="timestamp">3小时前</div>
+<!--         <div class="timestamp">{{ post.create_time }}</div> -->
       </div>
       <div class="postcontent">
-        <img :src="post.postImageUrl" />
+        <img :src="post.img_url" />
         <p>{{ post.content }}</p>
         <span style="font-size: 0.7em;" @click="showComments">查看全部３条评论</span>
       </div>

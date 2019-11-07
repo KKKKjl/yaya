@@ -1,8 +1,13 @@
 <template>
   <div>
-    <nut-navbar style="background-color:#fff; height:30px;" :leftShow="true" :rightShow="false">登录</nut-navbar>
+    <nut-navbar
+      style="background-color:#fff; height:30px;"
+      :leftShow="true"
+      :rightShow="false"
+      @on-click-back="back"
+    ></nut-navbar>
     <div class="edit">
-      <textarea class="input" maxlength="500" placeholder="说点什么吧......"></textarea>
+      <textarea class="input" maxlength="500" placeholder="说点什么吧......" v-model="content"></textarea>
       <div class="tool">
         <input id="file" @change="uploadImage" name="smfile" type="file" />
         <label for="file">
@@ -10,7 +15,7 @@
             <use xlink:href="#icon-shangchuan1" />
           </svg>
         </label>
-        <button class="btn">发布</button>
+        <button class="btn" @click="addPost">发布</button>
       </div>
       <div class="previewImg" v-show="isShow">
         <img :src="img" alt />
@@ -47,6 +52,7 @@ export default {
   data() {
     return {
       img: null,
+      content: "",
       isShow: false,
       name: "",
       isVisible: false,
@@ -65,6 +71,9 @@ export default {
     [ActionSheet.name]: ActionSheet
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     switchActionSheet() {
       this.isVisible = !this.isVisible;
     },
@@ -72,6 +81,20 @@ export default {
       if (itemParams.name == "确定") {
         this.isShow = !this.isShow;
       }
+    },
+    addPost() {
+      this.$api
+        .addPost({
+          content: this.content,
+          img_url: "https://i.loli.net/2019/11/06/WCFpLKVOdY3Th97.jpg",
+          author_id: 1
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     previewImg(file) {
       let ctx = this;

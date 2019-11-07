@@ -6,16 +6,16 @@ function resolve(dir) {
 
 module.exports = {
     devServer: {
-        port: 3001,
-        proxy: {
-            '/api': {
-                target: 'https://sm.ms',
-                ws: true,
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': '/api/'
-                }
-            }
-        }
+        port: 3001
+        // proxy: {
+        //     '/v1/api': {
+        //         target: 'http://localhost:8081',
+        //         ws: true,
+        //         changeOrigin: true,
+        //         pathRewrite: {
+        //             '^/v1/api': '/v1/api'
+        //         }
+        //     }
+        // }
     }
 }
