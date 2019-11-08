@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       swActive: true,
-      avatarImageUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
+      avatarImageUrl: "",
       nickName: ""
     };
   },
@@ -51,13 +51,10 @@ export default {
   methods: {
     getUserInfo() {
       this.$api
-        .getUserInfo({
-          params: {
-            nickname: "jinglei"
-          }
-        })
+        .getUserInfo({})
         .then(res => {
-          this.nickName = res.data.data.nickname
+          this.nickName = res.data.data.nickname;
+          this.avatarImageUrl = res.data.data.avatar_url;
         })
         .catch(err => {
           console.log(err);

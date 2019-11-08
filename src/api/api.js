@@ -7,7 +7,7 @@ export function getPosts() {
 }
 
 export function uploadImage(params) {
-	return axios.post('https://sm.ms/api/upload', params)
+	return axios.post(`${base.sq}/upload`, params)
 }
 
 export function register(params) {
@@ -18,12 +18,20 @@ export function login(params) {
 	return axios.post(`${base.lh}/auth`, qs.stringify(params))
 }
 
-export function getUserInfo(params) {
-	return axios.get(`${base.lh}/user`, params)
+export function getUserInfo() {
+	return axios.get(`${base.lh}/user`)
 }
 
 export function addPost(params) {
 	return axios.post(`${base.lh}/post`, qs.stringify(params))
+}
+
+export function addComment(params) {
+	return axios.post(`${base.lh}/comment`, qs.stringify(params))
+}
+
+export function getComments(params) {
+	return axios.get(`${base.lh}/comments`, params)
 }
 
 export default {
@@ -32,5 +40,7 @@ export default {
 	login,
 	register,
 	getUserInfo,
-	addPost
+	addPost,
+	addComment,
+	getComments
 }

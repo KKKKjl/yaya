@@ -6,6 +6,7 @@
     <resultMap type="com.example.app.model.User" id="user">
         <id property="id" column="id"/>
         <result property="nickname" column="nickname"/>
+        <result property="avatar_url" column="avatar_url"/>
         <result property="email" column="email"/>
         <result property="password" column="password"/>
         <result property="create_time" column="create_time"/>

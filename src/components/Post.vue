@@ -11,19 +11,19 @@
 
     <article v-else v-for="(post, index) in posts" :key="index">
       <div class="postinfo">
-        <img class="avatar" src="https://i.loli.net/2019/11/07/5tzAhG3RiPrevlU.jpg" />
-        <!-- <img class="avatar" :src="post.avatarImageUrl" /> -->
+<!--         <img class="avatar" src="https://i.loli.net/2019/11/07/5tzAhG3RiPrevlU.jpg" /> -->
+        <img class="avatar" :src="post.user.avatar_url" />
         <div class="nickname">{{ post.user.nickname }}</div>
         <div class="timestamp">3小时前</div>
-<!--         <div class="timestamp">{{ post.create_time }}</div> -->
+        <!--         <div class="timestamp">{{ post.create_time }}</div> -->
       </div>
       <div class="postcontent">
         <img :src="post.img_url" />
         <p>{{ post.content }}</p>
-        <span style="font-size: 0.7em;" @click="showComments">查看全部３条评论</span>
+        <span style="font-size: 0.7em;" @click="showComments(post.id)">查看全部３条评论</span>
       </div>
     </article>
-    <comment :isVisible="isVisible" v-on:cancel="showComments"></comment>
+    <comment :isVisible="isVisible" v-on:cancel="cancel" :postId="postId"></comment>
   </div>
 </template>
 
@@ -44,7 +44,8 @@ export default {
     return {
       posts: null,
       isShow: true,
-      isVisible: false
+      isVisible: false,
+      postId: null
     };
   },
   methods: {
@@ -61,9 +62,14 @@ export default {
           throw new Error(e);
         });
     },
-    showComments() {
+    cancel() {
       const ctx = this;
       ctx.isVisible = !ctx.isVisible;
+    },
+    showComments(id) {
+      const ctx = this;
+      ctx.postId = id;
+      ctx.isVisible = true;
     }
   },
   created() {

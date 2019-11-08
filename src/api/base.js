@@ -1,5 +1,5 @@
 const base = {
-    sq: 'http://yapi.demo.qunar.com/mock/18422',
+    sq: 'https://sm.ms/api',
     lh: 'http://localhost:8081/v1/api'
 }
 

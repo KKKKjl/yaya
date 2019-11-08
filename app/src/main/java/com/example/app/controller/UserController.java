@@ -1,8 +1,10 @@
 package com.example.app.controller;
 
+import com.example.app.model.Comment;
 import com.example.app.model.Post;
 import com.example.app.model.Resp;
 import com.example.app.model.User;
+import com.example.app.server.CommentServer;
 import com.example.app.server.PostServer;
 import com.example.app.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class UserController {
     @Autowired
     PostServer postServer;
 
+    @Autowired
+    CommentServer commentServer;
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Resp insertUserInfo(User user) {
         return userServer.insertUserInfo(user);
@@ -29,8 +34,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public Resp getUserInfo(@RequestParam String nickname) {
-        return userServer.getUserInfo(nickname);
+    public Resp getUserInfo() {
+        return userServer.getUserInfo();
     }
 
 
@@ -47,5 +52,15 @@ public class UserController {
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public Resp getPosts() {
         return postServer.getPosts();
+    }
+
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
+    public  Resp addComment(Comment comment) {
+        return commentServer.addComment(comment);
+    }
+
+    @RequestMapping(value = "comments", method = RequestMethod.GET)
+    public Resp getComments(@RequestParam String id) {
+        return commentServer.getComments(id);
     }
 }

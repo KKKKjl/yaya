@@ -8,11 +8,14 @@ import java.util.Collection;
 public class JwtUser implements UserDetails {
     private String username;
     private String password;
+    private Long id;
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(User user) {
         this.username = user.getNickname();
         this.password = user.getPassword();
+        this.id = user.getId();
+
     }
 
     @Override
@@ -48,5 +51,9 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 }

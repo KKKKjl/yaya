@@ -10,5 +10,5 @@ public interface UserServer {
     Resp insertUserInfo(User user);
     Resp auth(User user);
     Resp getAllUsers();
-    Resp getUserInfo(String nickname);
+    Resp getUserInfo();
 }

@@ -1,21 +1,22 @@
 <template>
   <div class="comment">
-    <nut-actionsheet :is-visible="isVisible" @close="showActionSheet">
+    <nut-actionsheet @close="showActionSheet" :isVisible="isVisible">
       <div slot="custom" class="custom-wrap">
         <div class="comment-input">
           <input v-model="comment" type="text" placeholder="请输入内容" style="outline: none;" />
           <span class="input-addon">
-            <button class="btn" type="button"></button>
+            <button class="btn" type="button" @click="addComment"></button>
           </span>
         </div>
-        <nut-scroller :type="'vertical'">
+        <nut-scroller :type="'vertical'" @pulldown="refresh" :isLoading="isLoading">
           <div slot="list" class="nut-vert-list-panel">
-            <h3>评论 78</h3>
+            <h3>评论 {{ count }}</h3>
             <div class="single-comment" v-for="(item, index) in comments" :key="index">
-              <img :src="item.avatarImgUrl" />
+<!--               <img src="https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg" /> -->
+              <img :src="item.user.avatar_url" />
               <div class="content">
-                <div class="nickname">{{ item.nickName }}</div>
-                <div>{{ item.comment }}</div>
+                <div class="nickname">{{ item.user.nickname }}</div>
+                <div>{{ item.content }}</div>
               </div>
             </div>
           </div>
@@ -36,37 +37,75 @@ export default {
   data() {
     return {
       comment: "",
-      comments: [
-        {
-          avatarImgUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "阿呆不想动",
-          comment:
-            "阿呆今天真的不想动!阿呆今天真的不想动!阿呆今天真的不想动!阿呆今天真的不想动!阿呆今天真的不想动!"
-        },
-        {
-          avatarImgUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "阿呆不想动",
-          comment: "阿呆今天真的不想动!"
-        },
-        {
-          avatarImgUrl: "https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg",
-          nickName: "阿呆不想动",
-          comment: "阿呆今天真的不想动!"
-        }
-      ]
+      comments: null,
+      isLoading: false,
+      timer: null,
+      count: 0
     };
   },
   props: {
+    postId: {
+      type: Number
+    },
     isVisible: {
-      required: true,
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   components: {
     [ActionSheet.name]: ActionSheet,
     [Scroller.name]: Scroller
   },
+  // mounted() {
+  //   this.getComments(this.postId);
+  // },
+  destroyed() {
+    clearTimeout(this.timer);
+  },
+  watch: {
+    postId(id) {
+      this.getComments(id);
+    }
+  },
   methods: {
+    refresh() {
+      this.isLoading = true;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.isLoading = false;
+        this.getComments(this.postId);
+      }, 300);
+    },
+    addComment() {
+      this.$api
+        .addComment({
+          content: this.comment,
+          post_id: this.postId
+        })
+        .then(res => {
+          this.comment = "";
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getComments(params) {
+      this.$api
+        .getComments({
+          params: {
+            id: params
+          }
+        })
+        .then(res => {
+          let comments = res.data.data;
+          this.comments = comments;
+          this.count = comments.length;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     showActionSheet() {
       const ctx = this;
       ctx.$emit("cancel");

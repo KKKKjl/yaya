@@ -17,10 +17,10 @@ public class JwtAuth {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final Logger logger = Logger.getLogger(JwtAuth.class.getName());
 
-    public static String generateJwtToken(String nickname) {
+    public static String generateJwtToken(Long id) {
         String token = Jwts.builder()
                 .signWith(secretKey, SignatureAlgorithm.HS256)
-                .setAudience(nickname)
+                .setAudience(String.valueOf(id))
                 .compact();
         logger.warning(token);
         return TOKEN_PREFIX + token;
@@ -38,10 +38,8 @@ public class JwtAuth {
         }
     }
 
-    public static String getUsername(String token) {
-        String a = parseJwtToken(token).getAudience();
-        logger.warning(a);
-        return a;
+    public static String getUserId(String token) {
+        return parseJwtToken(token).getAudience();
     }
 
 //    public Boolean isExperied(String token) {

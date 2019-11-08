@@ -4,6 +4,8 @@ import com.example.app.util.JwtAuth;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -17,10 +19,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
+//        this.userDetailsService = userDetailsService;
     }
-//
-//    @Autowired
-//    UserDetailsService userDetailsService;
+
+//    private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -37,6 +39,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
 //        UserDetails userDetails = userDetailsService.loadUserByUsername(JwtAuth.getUsername(token));
-        return new UsernamePasswordAuthenticationToken(JwtAuth.getUsername(token), null, null);
+        return new UsernamePasswordAuthenticationToken(JwtAuth.getUserId(token), null, null);
     }
 }

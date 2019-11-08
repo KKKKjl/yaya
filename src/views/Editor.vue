@@ -56,6 +56,7 @@ export default {
       isShow: false,
       name: "",
       isVisible: false,
+      imgUrl: "",
       menuItems: [
         {
           name: "确定"
@@ -86,8 +87,7 @@ export default {
       this.$api
         .addPost({
           content: this.content,
-          img_url: "https://i.loli.net/2019/11/06/WCFpLKVOdY3Th97.jpg",
-          author_id: 1
+          img_url: this.imgUrl
         })
         .then(res => {
           console.log(res);
@@ -124,15 +124,16 @@ export default {
       // };
       formData.append("smfile", file);
       this.previewImg(file);
-      // this.$api
-      //   .uploadImage(formData)
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(err => {
-      //     this.$toast.text("上传失败");
-      //     throw new Error(err);
-      //   });
+      this.$api
+        .uploadImage(formData)
+        .then(res => {
+          console.log(res.data);
+          this.imgUrl = res.data.data.url;
+        })
+        .catch(err => {
+          this.$toast.text("上传失败");
+          throw new Error(err);
+        });
     }
   }
 };

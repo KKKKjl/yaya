@@ -9,11 +9,13 @@ import com.example.app.model.Resp;
 import com.example.app.model.User;
 import com.example.app.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Service
@@ -59,9 +61,9 @@ public class UserServerImpl implements UserServer {
     }
 
     @Override
-    public Resp getUserInfo(String nickname) {
+    public Resp getUserInfo() {
         Resp resp = new Resp();
-        resp.setData(this.userMapper.getUser(nickname));
+        resp.setData(this.userMapper.selectById((Serializable) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
         return resp;
     }
 }
