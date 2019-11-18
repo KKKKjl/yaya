@@ -11,4 +11,5 @@ public interface UserServer {
     Resp auth(User user);
     Resp getAllUsers();
     Resp getUserInfo();
+    Resp updateUserInfo(String avatar_url);
 }

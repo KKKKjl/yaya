@@ -29,15 +29,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public Resp auth(User user) {
-        return userServer.auth(user);
+    public String auth() {
+        return "s";
     }
+//    public Resp auth(User user) {
+//        return userServer.auth(user);
+//    }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Resp getUserInfo() {
         return userServer.getUserInfo();
     }
 
+    @RequestMapping(value = "/user/{img}", method = RequestMethod.PATCH)
+    public Resp updateUserInfo(@PathVariable String img) {
+        return userServer.updateUserInfo(img);
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Resp getUserList() {

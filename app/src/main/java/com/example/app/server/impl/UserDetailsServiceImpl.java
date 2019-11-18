@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-//    private Logger logger = Logger.getLogger(UserDetailsServiceImpl.class.getName());
+    private Logger logger = Logger.getLogger(UserDetailsServiceImpl.class.getName());
 
     @Autowired
     private UserMapper userMapper;
@@ -21,9 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = this.userMapper.getUserInfo(s);
+        logger.info("通过userdetails");
         if (user == null) {
+            logger.info("kong");
             throw new UsernameNotFoundException("This username didn't exist.");
+        } else {
+            logger.info("sdadsdfas");
+            return new JwtUser(user);
         }
-        return new JwtUser(user);
     }
 }

@@ -12,19 +12,11 @@ public class Post {
     private long author_id;
     private Timestamp create_time;
     private Timestamp update_time;
-    private List<Comment> commentList = new ArrayList<Comment>();
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
 
     public User getUser() {
         return user;

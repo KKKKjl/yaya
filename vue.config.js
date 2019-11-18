@@ -5,13 +5,28 @@ function resolve(dir) {
 }
 
 module.exports = {
+    pwa: {
+        name: 'yaya',
+        themeColor: '#ffffff',
+        msTileColor: '#000000',
+        appleMobileWebAppCapable: 'yes',
+        appleMobileWebAppStatusBarStyle: 'black'
+    },
     devServer: {
         port: 3001,
         proxy: {
-            '/upload': {    
-                target: 'https://sm.ms/api',  
+            '/api': {
+                target: 'http://localhost:8081',
                 ws: true,
-                changeOrigin: true,  
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '/v1/api'
+                }
+            },
+            '/upload': {
+                target: 'https://sm.ms/api',
+                ws: true,
+                changeOrigin: true,
                 pathRewrite: {
                     '^/upload': '/upload'
                 }

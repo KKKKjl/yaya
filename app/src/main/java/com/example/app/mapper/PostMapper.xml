@@ -4,8 +4,7 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.app.mapper.PostMapper">
     <select id="getPosts" resultMap="post">
--- select post.content, post.img_url, user.nickname, commit.* from post, user, comment where post.author_id=user .id and
-select post.id, post.content, post.img_url, user.nickname, user.avatar_url from post, user where post.author_id = user.id</select>
+select post.id, post.content, post.img_url, post.create_time, user.nickname, user.avatar_url from post, user where post.author_id = user.id order by post.create_time desc</select>
 
     <resultMap type="com.example.app.model.Post" id="post">
         <id property="id" column="id"/>
@@ -20,13 +19,5 @@ select post.id, post.content, post.img_url, user.nickname, user.avatar_url from 
             <result property="avatar_url" column="avatar_url"/>
         </association>
 
-<!--        <collection property="comment"  ofType="com.example.app.model.Comment">-->
-<!--            <id property="id" column="post_id"/>-->
-<!--            <result property="content" column="content"/>-->
-<!--            <result property="author_id" column="author_id"/>-->
-<!--            <result property="post_id" column="post_id"/>-->
-<!--            <result property="create_time" column="create_time"/>-->
-<!--            <result property="update_time" column="update_time"/>-->
-<!--        </collection>-->
     </resultMap>
 </mapper>

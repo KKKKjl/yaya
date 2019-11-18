@@ -95,11 +95,13 @@ export default {
           let token = res.headers.authorization;
           if (token) {
             this.$store.commit("setToken", token);
+            this.$store.commit("setUserStatus");
+            // this.$router.push("/about").catch(e => {console.log(e)});
             // this.$store.commit("setUser", this.username);
           }
         })
         .catch(err => {
-          console.log(err);
+          console.log("跳转失败:" + err);
         });
     },
     register() {

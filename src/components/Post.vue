@@ -1,28 +1,33 @@
 <template>
   <div>
     <nut-skeleton class="my-skeleton" v-if="isShow">
-      <row padding="0 10px 20px" v-for=" i in 5" :key="i">
-        <column>
-          <skeleton-square width="auto" :count="6" margin="5px 10px 5px 10px"></skeleton-square>
-          <skeleton-square width="200px" margin="5px 10px 5px 10px"></skeleton-square>
-        </column>
-      </row>
+      <div v-for=" i in 5" :key="i">
+        <row padding="10px">
+          <skeleton-circle diameter="60px"></skeleton-circle>
+          <column>
+            <skeleton-square width="auto" :count="2" margin="5px 10px 5px 10px"></skeleton-square>
+            <skeleton-square width="100px" margin="5px 10px 5px 10px"></skeleton-square>
+          </column>
+        </row>
+        <row padding="0 0 20px 0">
+          <skeleton-square width="100%" :count="15"></skeleton-square>
+        </row>
+      </div>
     </nut-skeleton>
 
     <article v-else v-for="(post, index) in posts" :key="index">
       <div class="postinfo">
-<!--         <img class="avatar" src="https://i.loli.net/2019/11/07/5tzAhG3RiPrevlU.jpg" /> -->
         <img class="avatar" :src="post.user.avatar_url" />
         <div class="nickname">{{ post.user.nickname }}</div>
-        <div class="timestamp">3小时前</div>
-        <!--         <div class="timestamp">{{ post.create_time }}</div> -->
+        <timeago class="timestamp" :autoUpdate="1" :datetime="post.create_time" />
       </div>
       <div class="postcontent">
-        <img :src="post.img_url" />
+        <img :src="post.img_url" @click="previewImg(post.img_url, post.content)" />
         <p>{{ post.content }}</p>
         <span style="font-size: 0.7em;" @click="showComments(post.id)">查看全部３条评论</span>
       </div>
     </article>
+    <preview :isShow="showMask" :imgUrl="imgUrl" v-on:closeMask="closeMask" :imgDesc="imgDesc"></preview>
     <comment :isVisible="isVisible" v-on:cancel="cancel" :postId="postId"></comment>
   </div>
 </template>
@@ -31,6 +36,7 @@
 import Vue from "vue";
 import Skeleton from "@nutui/nutui";
 import comment from "@/components/Comment.vue";
+import preview from "@/components/Preview.vue";
 
 Skeleton.install(Vue);
 
@@ -38,17 +44,32 @@ export default {
   name: "post",
   components: {
     [Skeleton.name]: Skeleton,
-    comment
+    comment,
+    preview
   },
   data() {
     return {
+      date: new Date(),
       posts: null,
       isShow: true,
       isVisible: false,
-      postId: null
+      postId: null,
+      showMask: false,
+      imgUrl: null,
+      imgDesc: ""
     };
   },
   methods: {
+    previewImg(k, v) {
+      const ctx = this;
+      ctx.imgUrl = k;
+      ctx.imgDesc = v;
+      ctx.showMask = true;
+    },
+    closeMask() {
+      const ctx = this;
+      ctx.showMask = false;
+    },
     getPosts() {
       const ctx = this;
       this.$api
@@ -124,5 +145,17 @@ article {
     overflow: hidden;
     font-size: 0.9em;
   }
+}
+
+.vue-skeleton-row {
+  display: flex;
+}
+
+.vue-skeleton-column {
+  width: 100%;
+}
+
+.vue-skeleton-square-wrap {
+  width: 100%;
 }
 </style>

@@ -20,7 +20,6 @@
   fill: currentColor;
   overflow: hidden;
   color: #656565;
-  margin-right: 10px;
 }
 
 body {

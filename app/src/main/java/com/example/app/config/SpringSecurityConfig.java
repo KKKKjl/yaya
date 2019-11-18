@@ -43,6 +43,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/v1/api/posts").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/api/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/api/register").permitAll()
                 .antMatchers("/v1/api/**").authenticated()
@@ -75,7 +76,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter {
         config.addExposedHeader("Origin");
         config.addExposedHeader( "Access-Control-Request-Method");
         config.addExposedHeader("Access-Control-Request-Headers");
-        config.addExposedHeader("Authorization");
+        config.addExposedHeader("jwt_authorization");
 
         //2.添加映射路径
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();

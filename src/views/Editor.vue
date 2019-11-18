@@ -115,13 +115,7 @@ export default {
     uploadImage(val) {
       let file = val.target.files[0];
       let formData = new FormData();
-      // let config = {
-      //   onUploadProgress: progressEvent => {
-      //     console.log(12231);
-      //     let complete = (progressEvent.loaded / progressEvent.total) * 100;
-      //     this.percentage = complete;
-      //   }
-      // };
+
       formData.append("smfile", file);
       this.previewImg(file);
       this.$api

@@ -2,7 +2,10 @@
   <div class="about">
     <div class="bg">
       <p>{{ nickName }}</p>
-      <img :src="avatarImageUrl" />
+      <input id="file" @change="uploadImage" name="smfile" type="file" />
+      <label for="file">
+        <img :src="avatarImageUrl" />
+      </label>
       <div class="wave">
         <div class="circle"></div>
         <div class="circle"></div>
@@ -13,7 +16,7 @@
       <nut-cell title="个人信息" :showIcon="true"></nut-cell>
       <div class="cell">
         <span>夜间模式</span>
-        <nut-switch :active="true" size="small"></nut-switch>
+        <nut-switch :active="false" size="small"></nut-switch>
       </div>
 
       <nut-cell title="推荐朋友" :showIcon="true"></nut-cell>
@@ -49,6 +52,19 @@ export default {
     this.getUserInfo();
   },
   methods: {
+    uploadImage(val) {
+      let file = val.target.files[0];
+      let formData = new FormData();
+      formData.append("smfile", file);
+      this.$api
+        .uploadImage(formData)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          throw new Error(err);
+        });
+    },
     getUserInfo() {
       this.$api
         .getUserInfo({})
@@ -81,17 +97,23 @@ export default {
     top: 50px;
     left: 70px;
   }
-  & > img {
-    width: 90px;
-    height: 90px;
-    background: #fff;
-    border-radius: 50%;
+  & > input {
+    opacity: 0;
+    width: 0;
+    height: 0;
     position: absolute;
-    right: 50px;
-    bottom: 17px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    z-index: 5;
   }
+  // & > img {
+  //   width: 90px;
+  //   height: 90px;
+  //   background: #fff;
+  //   border-radius: 50%;
+  //   position: absolute;
+  //   right: 50px;
+  //   bottom: 17px;
+  //   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  //   z-index: 5;
+  // }
   &::after {
     content: "";
     left: 0;
@@ -162,5 +184,17 @@ export default {
   margin-left: 10px;
   padding: 13px 10px 13px 0;
   font-size: 14px;
+}
+
+img {
+  width: 90px;
+  height: 90px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  right: 50px;
+  bottom: 17px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  z-index: 5;
 }
 </style>

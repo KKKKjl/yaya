@@ -12,7 +12,6 @@
           <div slot="list" class="nut-vert-list-panel">
             <h3>评论 {{ count }}</h3>
             <div class="single-comment" v-for="(item, index) in comments" :key="index">
-<!--               <img src="https://i.loli.net/2019/10/26/bvfkZAIFSWRErKX.jpg" /> -->
               <img :src="item.user.avatar_url" />
               <div class="content">
                 <div class="nickname">{{ item.user.nickname }}</div>

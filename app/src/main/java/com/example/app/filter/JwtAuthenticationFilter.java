@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-//    private Logger logger = Logger.getLogger(JwtAuthenticationFilter.class.getName());
+    private Logger logger = Logger.getLogger(JwtAuthenticationFilter.class.getName());
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super.setFilterProcessesUrl("/v1/api/auth");
@@ -28,6 +28,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String username = request.getParameter("nickname");
         String password = request.getParameter("password");
+        logger.info(username);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         setDetails(request, token);
         return getAuthenticationManager().authenticate(token);
@@ -36,8 +37,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
-        response.setHeader("Authorization", JwtAuth.generateJwtToken(jwtUser.getId()));
+            JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
+            response.setHeader("Authorization", JwtAuth.generateJwtToken(jwtUser.getId()));
+            chain.doFilter(request, response);
     }
 
     @Override

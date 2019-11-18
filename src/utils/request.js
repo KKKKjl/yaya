@@ -9,7 +9,7 @@ var instance = axios.create({
 instance.interceptors.request.use(config => {
 	let token = window.localStorage.getItem("token")
 	if (token) {
-		config.headers['Authorization'] = token
+		config.headers['jwt_authorization'] = token
 	}
 	return config
 }, error => {

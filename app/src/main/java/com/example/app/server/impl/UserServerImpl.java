@@ -66,4 +66,14 @@ public class UserServerImpl implements UserServer {
         resp.setData(this.userMapper.selectById((Serializable) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
         return resp;
     }
+
+    @Override
+    public Resp updateUserInfo(String avatar_url) {
+        Resp resp = new Resp();
+        User user = new User();
+        user.setAvatar_url(avatar_url);
+        user.setId(Long.valueOf((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+        userMapper.updateById(user);
+        return resp;
+    }
 }

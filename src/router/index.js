@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (!token) {
       next({
-        name: "login",
+        path: "/login",
         query: { redirect: to.fullPath }
       });
     } else {

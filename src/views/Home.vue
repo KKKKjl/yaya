@@ -1,8 +1,13 @@
 <template>
   <div class="home">
     <div class="topbar">
-      <a href="/">最热</a>
+      <!-- <a href="/">最热</a> -->
       <a href="/">最近</a>
+      <!-- <div class="edit">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-fabu" />
+        </svg>
+      </div> -->
     </div>
     <div class="content">
       <post></post>
@@ -22,10 +27,8 @@ export default {
     post,
     tab
   },
-  methods: {
-  },
-  created() {
-  }
+  methods: {},
+  created() {}
 };
 </script>
 
@@ -35,12 +38,21 @@ export default {
 }
 
 .topbar {
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
+  display: flex;
   width: 100%;
-  padding: 0 10px;
   background-color: #ffffff;
   z-index: 2;
+  padding: 0 10px;
+}
+
+.edit {
+  padding: 5px;
+  border-radius: 50px;
+  background: #ff7b8c;
 }
 
 .content {
