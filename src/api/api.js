@@ -2,8 +2,8 @@ import axios from '@/utils/request';
 // import base from '@/api/base';
 import qs from 'qs';
 
-export function getPosts() {
-	return axios.get(`/api/posts`)
+export function getPosts(params) {
+	return axios.get(`/api/posts`, params)
 }
 
 export function uploadImage(params) {

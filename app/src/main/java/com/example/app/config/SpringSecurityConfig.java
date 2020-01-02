@@ -76,7 +76,7 @@ public class SpringSecurityConfig  extends WebSecurityConfigurerAdapter {
         config.addExposedHeader("Origin");
         config.addExposedHeader( "Access-Control-Request-Method");
         config.addExposedHeader("Access-Control-Request-Headers");
-        config.addExposedHeader("jwt_authorization");
+        config.addExposedHeader("Authorization");
 
         //2.添加映射路径
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();

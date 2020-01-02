@@ -15,7 +15,7 @@
       </div>
     </nut-skeleton>
 
-    <article v-else v-for="(post, index) in posts" :key="index">
+    <article v-for="(post, index) in posts" :key="index" v-else>
       <div class="postinfo">
         <img class="avatar" :src="post.user.avatar_url" />
         <div class="nickname">{{ post.user.nickname }}</div>

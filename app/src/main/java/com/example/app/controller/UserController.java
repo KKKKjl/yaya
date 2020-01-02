@@ -5,6 +5,7 @@ import com.example.app.model.Post;
 import com.example.app.model.Resp;
 import com.example.app.model.User;
 import com.example.app.server.CommentServer;
+import com.example.app.server.LikeServer;
 import com.example.app.server.PostServer;
 import com.example.app.server.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/api")
 public class UserController {
+    @Autowired
+    LikeServer likeServer;
+
     @Autowired
     UserServer userServer;
 
@@ -69,5 +73,16 @@ public class UserController {
     @RequestMapping(value = "comments", method = RequestMethod.GET)
     public Resp getComments(@RequestParam String id) {
         return commentServer.getComments(id);
+    }
+
+
+    @RequestMapping(value = "/like", method = RequestMethod.POST)
+    public Resp setLikeStatus(@RequestParam String postId) {
+        return likeServer.setLikeStatus(postId);
+    }
+
+    @RequestMapping(value = "/unlike", method = RequestMethod.DELETE)
+    public Resp setUnlikeStatus(@RequestParam String postId) {
+        return likeServer.setUnlikeStatus(postId);
     }
 }

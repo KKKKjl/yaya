@@ -19,7 +19,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private Logger logger = Logger.getLogger(JwtAuthenticationFilter.class.getName());
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super.setFilterProcessesUrl("/v1/api/auth");
+        super.setFilterProcessesUrl("/api/auth");
         setAuthenticationManager(authenticationManager);
     }
 

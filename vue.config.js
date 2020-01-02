@@ -1,16 +1,17 @@
 var path = require('path')
 
-function resolve(dir) {
-    return path.join(__dirname, './', dir)
-}
-
 module.exports = {
     pwa: {
         name: 'yaya',
         themeColor: '#ffffff',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
-        appleMobileWebAppStatusBarStyle: 'black'
+        appleMobileWebAppStatusBarStyle: 'black',
+        workboxPluginMode: 'InjectManifest',
+        workboxOptions: {
+            swSrc: 'src/service-worker.js',
+        }
+
     },
     devServer: {
         port: 3001,
