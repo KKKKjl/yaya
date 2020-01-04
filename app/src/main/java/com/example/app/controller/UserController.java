@@ -65,6 +65,16 @@ public class UserController {
         return postServer.getPosts();
     }
 
+    @RequestMapping(value = "/getallposts", method = RequestMethod.GET)
+    public Resp getAllPosts(@RequestParam String id) {
+        return postServer.getAllPosts(id);
+    }
+
+    @RequestMapping(value = "/delpost", method = RequestMethod.DELETE)
+    public Resp delPost(Post post) {
+        return postServer.delPosts(post);
+    }
+
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public  Resp addComment(Comment comment) {
         return commentServer.addComment(comment);

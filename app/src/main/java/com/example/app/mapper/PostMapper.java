@@ -10,4 +10,5 @@ import java.util.List;
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
     List<Post> getPosts();
+    List<Post> getAllPosts(String id);
 }

@@ -1,5 +1,6 @@
 package com.example.app.server.impl;
 
+import com.example.app.exception.ApiException;
 import com.example.app.mapper.PostMapper;
 import com.example.app.model.Post;
 import com.example.app.model.Resp;
@@ -40,6 +41,23 @@ public class PostServerImpl implements PostServer {
 //        (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails().getId();
 //        logger.info((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         resp.setData(this.postMapper.getPosts());
+        return resp;
+    }
+
+    @Override
+    public Resp delPosts(Post post) {
+//         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (postMapper.selectById(post.getId()).getAuthor_id() != userId) {
+//            throw new ApiException("no auth");
+//        }
+        postMapper.deleteById(post.getId());
+        return null;
+    }
+
+    @Override
+    public Resp getAllPosts(String id) {
+        Resp resp = new Resp();
+        resp.setData(this.postMapper.getAllPosts(id));
         return resp;
     }
 }

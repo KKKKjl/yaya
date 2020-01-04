@@ -6,4 +6,6 @@ import com.example.app.model.Resp;
 public interface PostServer {
     Resp addPost(Post post);
     Resp getPosts();
+    Resp delPosts(Post post);
+    Resp getAllPosts(String id);
 }
