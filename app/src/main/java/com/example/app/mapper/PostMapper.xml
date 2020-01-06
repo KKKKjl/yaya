@@ -4,7 +4,9 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.app.mapper.PostMapper">
     <select id="getPosts" resultMap="post">
-select post.id, post.content, post.img_url, post.create_time, post.author_id, user.nickname, user.avatar_url from post, user where post.author_id = user.id order by post.create_time desc</select>
+select post.id, post.content, post.create_time, post.img_url, post.author_id, user.nickname, user.avatar_url from post, user where post.author_id = user.id order by post.create_time desc</select>
+
+<!--    <select id="test" resultMap="post" parameterType="int">select post.id, post.author_id, post.img_url, user.id, heart.is_like from (post inner join user on post.author_id=user.id) left join heart on post.id = heart.post_id and heart.user_id = #{id}</select>-->
 
     <select id="getAllPosts" resultMap="post">select post.id, post.content, post.img_url, post.create_time, user.nickname, user.avatar_url from post, user where post.author_id = #{id} and user.id = #{id} order by post.create_time desc</select>
     <resultMap type="com.example.app.model.Post" id="post">
@@ -20,6 +22,13 @@ select post.id, post.content, post.img_url, post.create_time, post.author_id, us
             <result property="nickname" column="nickname"/>
             <result property="avatar_url" column="avatar_url"/>
         </association>
+
+<!--        <association property="heart" javaType="com.example.app.model.Heart">-->
+<!--            <id property="id" column="id"/>-->
+<!--            <result property="post_id" column="post_id"/>-->
+<!--            <result property="user_id" column="user_id"/>-->
+<!--            <result property="is_like" column="is_like"/>-->
+<!--        </association>-->
 
     </resultMap>
 </mapper>

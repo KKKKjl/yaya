@@ -1,7 +1,7 @@
 package com.example.app.server.impl;
 
+import com.example.app.model.Heart;
 import com.example.app.model.Resp;
-import com.example.app.model.UserLike;
 import com.example.app.server.LikeServer;
 import com.example.app.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,9 @@ public class LikeServerImpl implements LikeServer {
     }
 
     @Override
-    public List<UserLike> getLikedDataFromRedis() {
+    public List<Heart> getLikedDataFromRedis() {
         Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(RedisKeyUtils.MAP_KEY_USER_LIKED, ScanOptions.NONE);
-        List<UserLike> list = new ArrayList<>();
+        List<Heart> list = new ArrayList<>();
         while (cursor.hasNext()){
             Map.Entry<Object, Object> entry = cursor.next();
             String key = (String) entry.getKey();
@@ -49,9 +49,9 @@ public class LikeServerImpl implements LikeServer {
             String[] split = key.split("::");
             String likedUserId = split[1];
             String likedPostId = split[0];
-            // Integer value = (Integer) entry.getValue();
-            UserLike userLike = new UserLike(Long.valueOf(likedPostId), Long.valueOf(likedUserId), true);
-            list.add(userLike);
+             Integer value = (Integer) entry.getValue();
+            Heart heart = new Heart(Long.valueOf(likedPostId), Long.valueOf(likedUserId), Long.valueOf(value));
+            list.add(heart);
 
             redisTemplate.opsForHash().delete(RedisKeyUtils.MAP_KEY_USER_LIKED, key);
         }

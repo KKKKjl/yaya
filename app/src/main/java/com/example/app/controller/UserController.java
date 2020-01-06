@@ -61,8 +61,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
-    public Resp getPosts() {
-        return postServer.getPosts();
+    public Resp getPosts(@RequestParam Integer page, @RequestParam Integer limit) {
+        return postServer.getPosts(page, limit);
     }
 
     @RequestMapping(value = "/getallposts", method = RequestMethod.GET)

@@ -1,8 +1,6 @@
 package com.example.app.model;
 
 
-import lombok.Data;
-
 import java.sql.Timestamp;
 
 /**

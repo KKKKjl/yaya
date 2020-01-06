@@ -1,12 +1,12 @@
 package com.example.app.model;
 
+
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Post {
     private long id;
     private User user;
+//    private Heart heart;
     private String content;
     private String img_url;
     private long author_id;
@@ -17,22 +17,27 @@ public class Post {
         this.user = user;
     }
 
-
     public User getUser() {
         return user;
     }
+
+
+//    public Heart getHeart() {
+//        return heart;
+//    }
+//
+//    public void setHeart(Heart heart) {
+//        this.heart = heart;
+//    }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setUpdate_time(Timestamp update_time) {
-        this.update_time = update_time;
-    }
-
     public void setCreate_time(Timestamp create_time) {
         this.create_time = create_time;
     }
+
 
     public void setAuthor_id(long author_id) {
         this.author_id = author_id;
@@ -54,6 +59,14 @@ public class Post {
         return create_time;
     }
 
+    public void setUpdate_time(Timestamp update_time) {
+        this.update_time = update_time;
+    }
+
+    public Timestamp getUpdate_time() {
+        return update_time;
+    }
+
     public long getId() {
         return id;
     }
@@ -66,7 +79,4 @@ public class Post {
         return img_url;
     }
 
-    public Timestamp getUpdate_time() {
-        return update_time;
-    }
 }

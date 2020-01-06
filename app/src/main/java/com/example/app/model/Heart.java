@@ -1,12 +1,14 @@
 package com.example.app.model;
 
-public class UserLike {
+
+public class Heart {
     private Long id;
     private Long post_id;
     private Long user_id;
-    private Boolean is_like;
+    private Long is_like;
 
-    public UserLike(Long post_id, Long user_id, boolean is_like) {
+
+    public Heart(Long post_id, Long user_id, Long is_like) {
         this.post_id = post_id;
         this.user_id = user_id;
         this.is_like = is_like;
@@ -14,6 +16,10 @@ public class UserLike {
 
     public Long getId() {
         return id;
+    }
+
+    public void setIs_like(Long is_like) {
+        this.is_like = is_like;
     }
 
     public void setId(Long id) {
@@ -36,11 +42,8 @@ public class UserLike {
         this.user_id = user_id;
     }
 
-    public Boolean getIs_like() {
+    public Long getIs_like() {
         return is_like;
     }
 
-    public void setIs_like(Boolean is_like) {
-        this.is_like = is_like;
-    }
 }

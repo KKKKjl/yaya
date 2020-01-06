@@ -1,14 +1,13 @@
 package com.example.app.server.impl;
 
-import com.example.app.exception.ApiException;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.app.mapper.PostMapper;
 import com.example.app.model.Post;
 import com.example.app.model.Resp;
-import com.example.app.model.User;
 import com.example.app.server.PostServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -36,11 +35,12 @@ public class PostServerImpl implements PostServer {
     }
 
     @Override
-    public Resp getPosts() {
+    public Resp getPosts(Integer page, Integer limit) {
         Resp resp = new Resp();
+        Page<Post> iPage = new Page<>(page, limit);
 //        (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails().getId();
 //        logger.info((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        resp.setData(this.postMapper.getPosts());
+        resp.setData(this.postMapper.getPosts(iPage));
         return resp;
     }
 
