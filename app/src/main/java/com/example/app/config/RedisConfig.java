@@ -12,7 +12,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
-
 public class RedisConfig {
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
