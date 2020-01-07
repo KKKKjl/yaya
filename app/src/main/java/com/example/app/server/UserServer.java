@@ -12,4 +12,5 @@ public interface UserServer {
     Resp getAllUsers();
     Resp getUserInfo();
     Resp updateUserInfo(String avatar_url);
+    Resp update(User user);
 }

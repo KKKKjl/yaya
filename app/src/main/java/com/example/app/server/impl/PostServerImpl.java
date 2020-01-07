@@ -60,4 +60,11 @@ public class PostServerImpl implements PostServer {
         resp.setData(this.postMapper.getAllPosts(id));
         return resp;
     }
+
+    @Override
+    public Resp search(String post) {
+        Resp resp = new Resp();
+        resp.setData(this.postMapper.search(post));
+        return resp;
+    }
 }

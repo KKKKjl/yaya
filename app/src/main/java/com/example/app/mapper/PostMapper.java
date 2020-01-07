@@ -14,4 +14,5 @@ public interface PostMapper extends BaseMapper<Post> {
 //    List<Post> getPosts();
     IPage<Post> getPosts(Page page);
     List<Post> getAllPosts(String id);
+    List<Post> search(String post);
 }

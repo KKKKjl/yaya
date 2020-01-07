@@ -76,4 +76,11 @@ public class UserServerImpl implements UserServer {
         userMapper.updateById(user);
         return resp;
     }
+
+    @Override
+    public Resp update(User user) {
+        user.setId(Long.valueOf((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+        userMapper.updateById(user);
+        return null;
+    }
 }

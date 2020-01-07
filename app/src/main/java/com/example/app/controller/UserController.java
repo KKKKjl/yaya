@@ -8,6 +8,7 @@ import com.example.app.server.CommentServer;
 import com.example.app.server.LikeServer;
 import com.example.app.server.PostServer;
 import com.example.app.server.UserServer;
+import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,16 @@ public class UserController {
         return postServer.addPost(post);
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public  Resp search(@RequestParam String post) {
+        return postServer.search(post);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PATCH)
+    public Resp update(User user) {
+        return userServer.update(user);
+    }
+
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public Resp getPosts(@RequestParam Integer page, @RequestParam Integer limit) {
         return postServer.getPosts(page, limit);
@@ -96,3 +107,4 @@ public class UserController {
         return likeServer.setUnlikeStatus(postId);
     }
 }
+

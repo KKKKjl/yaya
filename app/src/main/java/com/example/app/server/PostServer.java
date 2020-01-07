@@ -9,4 +9,5 @@ public interface PostServer {
     Resp getPosts(Integer page, Integer limit);
     Resp delPosts(Post post);
     Resp getAllPosts(String id);
+    Resp search(String post);
 }
